@@ -35,7 +35,9 @@ export const HomePage = () => {
       <button disabled={skip === 0} onClick={handleBack}>
         Back
       </button>
-      <button onClick={handleNext}>Next</button>
+      <button disabled={skip === 50} onClick={handleNext}>
+        Next
+      </button>
       <div className="container grid grid-cols-4 gap-10 mx-auto mt-8 ">
         {data.map((index) => (
           <div

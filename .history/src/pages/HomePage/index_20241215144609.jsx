@@ -4,51 +4,35 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 export const HomePage = () => {
   const [data, setData] = useState([]);
-  const [skip, setSkip] = useState(0);
-  const limit = 4;
   const getData = async () => {
     try {
-      const res = await axios.get(
-        `https://dummyjson.com/recipes?limit=${limit}&skip=${skip}`
-      );
+      const res = await axios.get("https://dummyjson.com/recipes");
       console.log("res ", res.data);
       setData(res.data.recipes);
     } catch (error) {
       console.log("err ", error);
     }
   };
-  const handleNext = () => {
-    setSkip(skip + limit);
-  };
-  const handleBack = () => {
-    setSkip(skip - limit);
-  };
   useEffect(() => {
     getData();
   }, []);
-  useEffect(() => {
-    getData();
-  }, [skip]);
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <button disabled={skip === 0} onClick={handleBack}>
-        Back
-      </button>
-      <button onClick={handleNext}>Next</button>
-      <div className="container grid grid-cols-4 gap-10 mx-auto mt-8 ">
+      <div className="grid grid-cols-4 gap-10 mt-8 container mx-auto ">
         {data.map((index) => (
           <div
             key={index.id}
-            className="flex flex-col justify-between h-full p-6 transition-transform duration-300 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
+            className="bg-white transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-lg rounded-lg p-6  h-full"
           >
             <div className="mb-4">
-              <h1 className="mb-4 text-2xl font-semibold text-gray-800">
+              <h1 className="text-2xl font-semibold text-gray-800 mb-4">
                 {index.name}
               </h1>
-              <h2 className="mb-2 font-medium text-gray-600">Ingredients:</h2>
+              <h2 className="text-gray-600 font-medium mb-2">Ingredients:</h2>
               {index?.ingredients.map((single, i) => (
-                <p key={i} className="mb-1 text-sm text-gray-700">
+                <p key={i} className="text-gray-700 text-sm mb-1">
                   - {single}
                 </p>
               ))}
@@ -68,7 +52,7 @@ export const HomePage = () => {
             </div>
             <div>
               <Link to={`/detail/${index.id}`}>
-                <button className="w-full px-6 py-2 font-semibold text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600">
+                <button className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg w-full hover:bg-blue-600 transition-colors">
                   Detail Recipe
                 </button>
               </Link>

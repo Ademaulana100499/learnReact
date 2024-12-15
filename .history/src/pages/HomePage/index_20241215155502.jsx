@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const HomePage = () => {
   const [data, setData] = useState([]);
   const [skip, setSkip] = useState(0);
-  const limit = 4;
+  const limit = 3;
   const getData = async () => {
     try {
       const res = await axios.get(
